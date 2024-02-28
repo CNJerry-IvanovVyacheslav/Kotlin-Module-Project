@@ -1,5 +1,8 @@
 import java.util.Scanner
 
+fun main() {
+    archiveMenu()
+}
 
 private val scanner = Scanner(System.`in`)
 private val archives = mutableListOf<Archive>()
@@ -119,9 +122,14 @@ private fun createNote(archive: Archive) {
         noteTitle.isNotBlank() -> {
             println("Введите содержимое новой заметки:")
             val noteContent = scanner.nextLine()
-            val newNote = Note(noteTitle, noteContent)
-            archive.addNote(newNote)
-            println("Заметка под названием \"$noteTitle\" добавлена в архив.")
+            if (noteContent.isNotEmpty()) {
+                val newNote = Note(noteTitle, noteContent)
+                archive.addNote(newNote)
+                println("Заметка под названием \"$noteTitle\" добавлена в архив.")
+            } else {
+                println("Текст заметки не может быть пустым!")
+                return
+            }
         }
 
         else -> {
@@ -134,9 +142,4 @@ private fun viewNoteContent(note: Note) {
     println("Содержимое заметки:")
     println("Заголовок: ${note.title}")
     println("Содержание: ${note.textOfNote}")
-}
-
-
-fun main() {
-    archiveMenu()
 }
